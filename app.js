@@ -24,12 +24,12 @@ app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
-mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true});
-var postSchema = new mongoose.Schema({
+
+mongoose.connect('mongodb://localhost/blog', {useNewUrlParser: true});var postSchema = new mongoose.Schema({
   title: String,
   body: String,
   date: String,
-  link: String
+  // link: String
 });
 
 var Post = mongoose.model('Post', postSchema);
@@ -61,8 +61,8 @@ app.get("/contact", function(req, res){
   });
 });
 
-app.get('/posts/:postName', function (req, res) {
-  const pname = req.params.postName;
+app.get('/posts/:postId', function (req, res) {
+  const pid = req.params.postId;
   // titles.forEach(function(title){
   //   if (title=== pname){
   //     console.log("yes");
@@ -75,31 +75,19 @@ app.get('/posts/:postName', function (req, res) {
   //   return _.kebabCase(title) === pname;
   // });
 
-  Post.find({}, function(err, found){
-    var foundit = false;
-    if (err) 
-      console.log(err);
-
-
-    found.forEach(function(post){
-      if (_.kebabCase(post.title) === pname){
-        foundit = true;
-        res.render("post", {
-          post: post,
-        });
-      }
-
-    });
-    if (foundit === false){
+  Post.findOne({_id: pid}, function(err, found){ 
+    if (err){
       res.render("page", {
         title: "Error: No such post",
         intro: ""
       });
     }
-
-
+    else{
+      res.render("post", {
+        post: found,
+      });
+    }
   });
- 
 
 });
 
@@ -110,16 +98,26 @@ app.get("/compose", function(req, res){
 });
 
 app.post("/compose", function(req, res){
-  const link = "/posts/" + _.kebabCase(req.body.title);
+  // const link = "/posts/" + _.kebabCase(req.body.title);
   var postdate = date.date();
   var post = new Post({
     title: req.body.title,
     body: req.body.post,
     date: postdate,
-    link: link
+    // link: link
   });
 
-  post.save();
+  post.save(function(err){
+    if (err) {
+      res.render("page", {
+        title: "Error: No such post",
+        intro: ""
+      });
+    }
+    else
+      res.redirect("/");
+
+  });
 
   const msg = {
     to: [
@@ -137,7 +135,6 @@ app.post("/compose", function(req, res){
   });
   
 
-  res.redirect("/");
 });
 
 

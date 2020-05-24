@@ -7,7 +7,7 @@
     
     <h1><%= post.title %></h1>
     <p><%=  post.date + " " +  post.body.substring(0,100) + "... " %> </p>
-    <a href="<%=post.link %>">Read more</a>
+    <a href="/posts/<%=post._id %>">Read more</a>
 <%});%>
 
 
