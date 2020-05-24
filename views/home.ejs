@@ -1,0 +1,17 @@
+<%- include("partials/header.ejs") -%>
+
+<h1> Hello </h1>
+<p> <%= intro %> </p>
+
+<% posts.reverse().forEach(function(post){%>
+    
+    <h1><%= post.title %></h1>
+    <p><%=  post.date + " " +  post.body.substring(0,100) + "... " %> </p>
+    <a href="<%=post.link %>">Read more</a>
+<%});%>
+
+
+<%- include("partials/footer.ejs") -%>
+
+
+</html>
