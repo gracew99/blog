@@ -121,7 +121,8 @@ app.post("/compose", function(req, res){
 
   const msg = {
     to: [
-      {email: 'gw17@princeton.edu'}],
+      {email: '7.knicksfan.7@gmail.com'}, 
+      {email: 'gw297@scarletmail.rutgers.edu'}],
     from: '7.knicksfan.7@gmail.com',
     subject: req.body.title,
     text: req.body.post
