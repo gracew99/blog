@@ -119,21 +119,21 @@ app.post("/compose", function(req, res){
 
   });
 
-  // const msg = {
-  //   to: [
-  //     {email: '7.knicksfan.7@gmail.com'}, 
-  //     {email: 'gw297@scarletmail.rutgers.edu'}],
-  //   from: '7.knicksfan.7@gmail.com',
-  //   subject: req.body.title,
-  //   text: req.body.post
-  // };
-  // sgMail.send(msg, function(err){
-  //   if (err)
-  //     console.log(err);
-  //   else
-  //     console.log("sent");
+  const msg = {
+    to: [
+      {email: '7.knicksfan.7@gmail.com'}, 
+      {email: 'gw297@scarletmail.rutgers.edu'}],
+    from: '7.knicksfan.7@gmail.com',
+    subject: req.body.title,
+    text: req.body.post
+  };
+  sgMail.send(msg, function(err){
+    if (err)
+      console.log(err);
+    else
+      console.log("sent");
 
-  // });
+  });
   
 
 });
